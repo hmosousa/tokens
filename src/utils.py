@@ -9,7 +9,7 @@ from transformers import AutoTokenizer
 logger = logging.getLogger(__name__)
 
 
-def compute_perplexity(model, tokenizer, text):
+def compute_perplexity(model, tokenizer, text: str):
     inputs = tokenizer(text, return_tensors="pt")
     loss = model(input_ids=inputs["input_ids"], labels=inputs["input_ids"]).loss
     return torch.exp(loss)
