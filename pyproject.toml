@@ -1,0 +1,43 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "src"
+version = "0.0.1"
+dependencies = [
+  "datasets==2.16.1",
+  "transformers==4.37.0",
+  "torch==2.1.2",
+]
+requires-python = ">=3.11"
+authors = [
+  {name = "Hugo Sousa", email = "hmosousa@gmail.com"},
+]
+maintainers = [
+  {name = "Hugo Sousa", email = "hmosousa@gmail.com"},
+]
+description = "Hack the tokenizer."
+# readme = "README.md"
+# license = {file = "LICENSE.txt"}
+keywords = [
+    "tokens", 
+    "tokenizer", 
+    "transformers", 
+    "huggingface",
+    "nlp",
+    "natural language processing",
+    "machine learning",
+    "deep learning",
+    "artificial intelligence"
+]
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "Programming Language :: Python"
+]
+
+[tool.ruff]
+line-length = 120
+exclude = [
+    ".conda",
+]
