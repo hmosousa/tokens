@@ -1,27 +1,30 @@
-import logging
 import json
+import logging
 from pathlib import Path
 
 import torch
 from transformers import AutoTokenizer
 
-
 logger = logging.getLogger(__name__)
 
 
-def compute_perplexity(model, tokenizer, text: str):
-    inputs = tokenizer(text, return_tensors="pt")
-    loss = model(input_ids=inputs["input_ids"], labels=inputs["input_ids"]).loss
-    return torch.exp(loss)
+def compute_perplexity(model, tokenizer, text: str | list[str]) -> float:
+    if tokenizer.pad_token is None:
+        tokenizer.pad_token = tokenizer.eos_token
+    inputs = tokenizer(text, return_tensors="pt", padding=True)
+    loss = model(
+        input_ids=inputs["input_ids"], labels=inputs["input_ids"], attention_mask=inputs["attention_mask"]
+    ).loss
+    return torch.exp(loss).item()
 
 
-def _batch_iterator(lines, batch_size: int = 8):
+def batch_iterator(lines, batch_size: int = 8):
     for i in range(0, len(lines), batch_size):
         yield lines[i : i + batch_size]
 
 
 def train_tokenizer(tokenizer, dataset, vocab_size: int = 1_000):
-    dataset_iterator = _batch_iterator(dataset)
+    dataset_iterator = batch_iterator(dataset)
     trained_tokenizer = tokenizer.train_new_from_iterator(dataset_iterator, vocab_size=vocab_size)
     return trained_tokenizer
 
