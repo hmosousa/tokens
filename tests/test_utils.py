@@ -1,7 +1,7 @@
-from transformers import AutoTokenizer
+from transformers import AutoTokenizer, AutoModelForCausalLM
 
 from src.constants import MODEL
-from src.utils import add_token_to_tokenizer
+from src.utils import add_token_to_tokenizer, compute_perplexity
 
 
 def test_add_token_to_tokenizer(tmp_path):
@@ -30,3 +30,21 @@ def test_add_token_to_tokenizer_multiple(tmp_path):
 
     token = edited_tokenizer.tokenize(" testwithnewnewtoken")[0]
     assert token == new_tokens[1]
+
+
+def test_compute_perplexity():
+    model = AutoModelForCausalLM.from_pretrained(MODEL)
+    tokenizer = AutoTokenizer.from_pretrained(MODEL)
+
+    text = "This is a test."
+    ppl = compute_perplexity(model, tokenizer, text)
+    assert ppl > 0
+
+
+def test_compute_perplexity_batch():
+    model = AutoModelForCausalLM.from_pretrained(MODEL)
+    tokenizer = AutoTokenizer.from_pretrained(MODEL)
+
+    text = ["This is a test.", "This is a second test.", "this is a third test."]
+    ppl = compute_perplexity(model, tokenizer, text)
+    assert ppl > 0
