@@ -9,7 +9,8 @@ dependencies = [
   "datasets==2.16.1",
   "transformers==4.37.0",
   "torch==2.1.2",
-  "nltk==3.8.1"
+  "nltk==3.8.1",
+  "dvc==3.42.0"
 ]
 requires-python = ">=3.11"
 authors = [
@@ -36,6 +37,10 @@ classifiers = [
   "Development Status :: 4 - Beta",
   "Programming Language :: Python"
 ]
+
+[project.optional-dependencies]
+lint = ["ruff"]
+test = ["pytest"]
 
 [tool.ruff]
 line-length = 120
