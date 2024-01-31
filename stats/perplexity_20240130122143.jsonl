@@ -1,0 +1,9 @@
+{
+    "model": "microsoft/phi-1_5",
+    "tokenizer": "original_tokenizer",
+    "perplexity": {
+        "mean": 102.73967742919922,
+        "min": 72.20811462402344,
+        "max": 133.271240234375
+    }
+}

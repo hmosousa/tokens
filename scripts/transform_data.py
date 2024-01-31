@@ -1,4 +1,3 @@
-import multiprocessing as mp
 from pathlib import Path
 
 from nltk.tokenize import sent_tokenize
